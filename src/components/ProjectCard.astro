@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title: string; price: number; sale?: number;
+  category: string; img: string;
+}
+const { title, price, sale, category, thumbnail } = Astro.props;
+const fmt = (n:number)=> n.toLocaleString("vi-VN");
+---
+<article class="card bg-base-100 border border-base-300 hover:shadow-lg transition">
+  <figure><img src={thumbnail} alt={title} class="aspect-video object-cover" loading="lazy" /></figure>
+  <div class="card-body">
+    <div class="flex items-center justify-between">
+      <h3 class="card-title text-lg">{title}</h3>
+      <div class="badge badge-neutral">{category}</div>
+    </div>
+    <div class="mt-2 flex items-center gap-2">
+      {sale
+        ? (<>
+            <span class="text-lg font-bold text-primary">{fmt(sale)}₫</span>
+            <span class="text-sm line-through opacity-60">{fmt(price)}₫</span>
+          </>)
+        : (<span class="text-lg font-bold">{fmt(price)}₫</span>)
+      }
+    </div>
+  </div>
+</article>

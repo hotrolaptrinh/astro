@@ -1,0 +1,88 @@
+<section id="request" class="py-12 fade-in">
+  <h2 class="text-2xl font-bold mb-6">Gửi yêu cầu</h2>
+
+  <form class="card bg-base-100 border border-base-300 max-w-3xl mx-auto" id="requestForm">
+    <div class="card-body">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="form-control">
+          <div class="label"><span class="label-text">Họ tên</span></div>
+          <label class="input input-bordered flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-4 opacity-70" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5Zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5Z"/></svg>
+            <input name="name" required placeholder="Nguyễn Văn A" class="grow" />
+          </label>
+        </label>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">Email</span></div>
+          <label class="input input-bordered flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-4 opacity-70" viewBox="0 0 24 24" fill="currentColor"><path d="M22 6a2 2 0 0 0-2-2H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6Zm-2 0-8 5L4 6h16Zm0 12H4V8l8 5 8-5v10Z"/></svg>
+            <input type="email" name="email" required placeholder="you@email.com" class="grow" />
+          </label>
+        </label>
+
+        <label class="form-control sm:col-span-2">
+          <div class="label"><span class="label-text">Loại dự án</span></div>
+          <select name="type" class="select select-bordered">
+            <option value="web">Website</option>
+            <option value="app">App</option>
+            <option value="script">Script</option>
+            <option value="khac">Khác</option>
+          </select>
+          <div class="label"><span class="label-text-alt opacity-70">Chọn để mình ước lượng thời gian/chi phí nhanh hơn.</span></div>
+        </label>
+
+        <label class="form-control sm:col-span-2">
+          <div class="label"><span class="label-text">Nội dung yêu cầu</span></div>
+          <textarea name="message" rows="6" required class="textarea textarea-bordered" placeholder="Mô tả ngắn chức năng, deadline, ngân sách dự kiến..."></textarea>
+          <div class="label"><span class="label-text-alt opacity-70">Ví dụ: “Web bán hàng, cần giỏ hàng + thanh toán VNPay, deadline 2 tuần.”</span></div>
+        </label>
+
+        <div class="sm:col-span-2 flex items-center gap-3">
+          <input type="checkbox" name="consent" class="checkbox checkbox-primary" required />
+          <span class="text-sm opacity-80">Tôi đồng ý với chính sách bảo mật & điều khoản sử dụng.</span>
+        </div>
+      </div>
+
+      <div class="card-actions justify-end mt-3">
+        <button class="btn btn-primary" id="submitBtn">
+          <span class="loading loading-spinner hidden" id="loadingIcon"></span>
+          <span>Gửi yêu cầu</span>
+        </button>
+      </div>
+
+      <p class="text-success hidden" id="successMsg">Gửi thành công! Mình sẽ phản hồi sớm.</p>
+      <p class="text-error hidden" id="errorMsg">Có lỗi xảy ra, thử lại giúp mình.</p>
+    </div>
+  </form>
+
+  <script>
+    // Demo gửi form: bạn có thể đổi sang API riêng (NestJS/Supabase Function). Ở đây minh hoạ fetch tới Formspree.
+    const form = document.getElementById("requestForm");
+    const btn = document.getElementById("submitBtn");
+    const loadingIcon = document.getElementById("loadingIcon");
+    const ok = document.getElementById("successMsg");
+    const fail = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      ok.classList.add("hidden"); fail.classList.add("hidden");
+      loadingIcon.classList.remove("hidden"); btn.setAttribute("disabled","true");
+
+      try {
+        const data = new FormData(form);
+        // đổi endpoint của bạn tại đây:
+        const endpoint = "https://formspree.io/f/your-id";
+        const res = await fetch(endpoint, { method: "POST", body: data, headers: { Accept: "application/json" }});
+        if (res.ok) {
+          ok.classList.remove("hidden");
+          form.reset();
+        } else throw new Error("submit failed");
+      } catch {
+        fail.classList.remove("hidden");
+      } finally {
+        loadingIcon.classList.add("hidden");
+        btn.removeAttribute("disabled");
+      }
+    });
+  </script>
+</section>

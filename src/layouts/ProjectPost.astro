@@ -1,0 +1,30 @@
+---
+import Base from "./Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BackToTop from "../components/BackToTop.astro";
+
+const { content, frontmatter } = Astro.props;
+---
+<Base title={frontmatter.title} description={content}>
+  <Fragment slot="header"><Header /></Fragment>
+
+  <article class="prose lg:prose-lg mx-auto py-12">
+    <h1>{frontmatter.title}</h1>
+    {frontmatter.thumbnail && <img src={frontmatter.thumbnail} alt={frontmatter.title} class="rounded-lg shadow my-6" />}
+    <p class="text-sm opacity-70">Đăng ngày {frontmatter.date}</p>
+    <slot />
+    <div class="mt-6">
+      {frontmatter.sale 
+        ? <p><span class="font-bold text-primary">{frontmatter.sale.toLocaleString("vi-VN")}₫</span>
+            <span class="line-through ml-2 opacity-60">{frontmatter.price?.toLocaleString("vi-VN")}₫</span></p>
+        : <p class="font-bold">{frontmatter.price?.toLocaleString("vi-VN")}₫</p>
+      }
+    </div>
+  </article>
+    <Fragment slot="footer">
+    <BackToTop />
+    <Footer />
+  </Fragment>
+
+</Base>

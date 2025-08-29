@@ -1,0 +1,66 @@
+---
+import "../styles/app.css";
+const {
+  title = "My Site",
+  description = "Landing/Blog với Astro + Tailwind v4 + daisyUI",
+  canonical = "https://example.com/",
+  ogImage = "/img/1/1.png",
+  siteName = "My Site",
+} = Astro.props;
+
+// JSON-LD: Website + Organization (tối giản, có thể mở rộng)
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteName,
+  url: canonical,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${canonical}?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  }
+};
+---
+<html lang="vi" data-theme="winter">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0b0f" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+
+  </head>
+  <body class="min-h-dvh bg-base-100 text-base-content">
+    <slot name="header" />
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>
