@@ -8,8 +8,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://hotrolaptrinh.github.io/astro',
-  base: '/astro/',
+  site: "https://hotrolaptrinh.github.io/astro/",
+  base: "/astro/",
   integrations: [mdx(), sitemap()],
 
   vite: {
