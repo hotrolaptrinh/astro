@@ -1,17 +1,143 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "./Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BackToTop from "../components/BackToTop.astro";
-
+import ProjectCard from "../components/ProjectCard.astro";
 const { content, frontmatter } = Astro.props;
+const allProjects = await getCollection("projects");
+// get 10 projects
+const projects = allProjects
+  .filter((p) => p.data.published)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 10);
 ---
+
 <Base title={frontmatter.title} description={content}>
   <Fragment slot="header"><Header /></Fragment>
 
-  <article class="prose lg:prose-lg mx-auto py-12">
+  <section
+    class="container mx-auto px-4 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8"
+  >
+    <!-- Hình ảnh sản phẩm -->
+    <div class="flex items-center justify-center">
+      <figure class="rounded-xl shadow-xl bg-base-200 p-4">
+        <img
+          src={Astro.site?.pathname + frontmatter.thumbnail}
+          alt={frontmatter.title}
+          class="rounded-lg aspect-video object-cover"
+        />
+      </figure>
+    </div>
+
+    <!-- Thông tin sản phẩm -->
+    <div class="space-y-6">
+      <h1 class="text-2xl font-bold">{frontmatter.title}</h1>
+
+      <!-- Rating -->
+      <div class="flex items-center gap-2">
+        <span class="text-sm">10 </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-4"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+          ></path>
+        </svg>
+        <div class="rating rating-sm">
+          <input
+            type="radio"
+            name="rating-1"
+            class="mask mask-star-2 bg-orange-400"
+            checked
+          />
+          <input
+            type="radio"
+            name="rating-1"
+            class="mask mask-star-2 bg-orange-400"
+          />
+          <input
+            type="radio"
+            name="rating-1"
+            class="mask mask-star-2 bg-orange-400"
+          />
+          <input
+            type="radio"
+            name="rating-1"
+            class="mask mask-star-2 bg-orange-400"
+          />
+          <input
+            type="radio"
+            name="rating-1"
+            class="mask mask-star-2 bg-orange-400"
+          />
+        </div>
+        <span class="text-sm opacity-70">(0 reviews)</span>
+      </div>
+      <!-- Giá -->
+      <h3 class="text-xl font-semibold">
+        Giá: <span class="text-primary"
+          >{frontmatter.sale.toLocaleString("vi-VN")}₫ <span
+            class="line-through ml-2 opacity-60"
+            >{frontmatter.price?.toLocaleString("vi-VN")}₫</span
+          ></span
+        >
+      </h3>
+
+      <!-- Ưu đãi -->
+      <ul class="list-disc list-inside text-sm space-y-1">
+        <li>Ngày đăng:</li>
+        <li>Thể loại:</li>
+      </ul>
+
+      <!-- Chọn màu -->
+      <div>
+        <h4 class="font-medium mb-2">Giao diện:</h4>
+        <div class="flex gap-2">
+          <button
+            class="w-6 h-6 rounded-full bg-sky-400 border-2 border-primary"
+          ></button>
+          <button class="w-6 h-6 rounded-full bg-gray-400 border"></button>
+        </div>
+      </div>
+
+      <!-- Số lượng + nút -->
+      <div class="flex flex-wrap gap-3 items-center">
+        <button class="btn btn-primary">Tải về</button>
+        <button class="btn btn-neutral"> Xem demo</button>
+        <button class="btn btn-outline btn-circle"> ❤️ </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="prose lg:prose-lg mx-auto py-12">
+    <h2>Mô tả</h2>
+    <slot />
+  </div>
+  <section id="projects" class="fade-in">
+    <h2 class="text-2xl font-bold mb-6">Code liên quan</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        projects.map((p) => (
+          <a href={`${Astro.site?.pathname}projects/${p.slug}`}>
+            <ProjectCard {...p.data} />
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- <article class="prose lg:prose-lg mx-auto py-12">
     <h1>{frontmatter.title}</h1>
-    {frontmatter.thumbnail && <img src={frontmatter.thumbnail} alt={frontmatter.title} class="rounded-lg shadow my-6" />}
+    {frontmatter.thumbnail && <img src={Astro.site?.pathname + frontmatter.thumbnail} alt={frontmatter.title} class="rounded-lg shadow my-6" />}
     <p class="text-sm opacity-70">Đăng ngày {frontmatter.date}</p>
     <slot />
     <div class="mt-6">
@@ -21,10 +147,9 @@ const { content, frontmatter } = Astro.props;
         : <p class="font-bold">{frontmatter.price?.toLocaleString("vi-VN")}₫</p>
       }
     </div>
-  </article>
-    <Fragment slot="footer">
+  </article> -->
+  <Fragment slot="footer">
     <BackToTop />
     <Footer />
   </Fragment>
-
 </Base>

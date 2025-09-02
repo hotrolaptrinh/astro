@@ -7,7 +7,7 @@ const { title, price, sale, category, thumbnail } = Astro.props;
 const fmt = (n:number)=> n.toLocaleString("vi-VN");
 ---
 <article class="card bg-base-100 border border-base-300 hover:shadow-lg transition">
-  <figure><img src={thumbnail} alt={title} class="aspect-video object-cover" loading="lazy" /></figure>
+  <figure><img src={Astro.site?.pathname + thumbnail} alt={title} class="aspect-video object-cover" loading="lazy" /></figure>
   <div class="card-body">
     <div class="flex items-center justify-between">
       <h3 class="card-title text-lg">{title}</h3>
