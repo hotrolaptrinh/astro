@@ -6,6 +6,7 @@ sale: 1500000
 thumbnail: "/img/1/2.png" 
 tags: ["winform","c#","sql"]
 published: true
+date: 2025-09-03
 ---
 
 Quản lý bán quán cà phê bao gồm các chức năng:
