@@ -1,5 +1,6 @@
 ---
 title: "Web bán hàng"
+date: 2025-08-20
 category: "web"
 price: 2000000
 sale: 1500000
