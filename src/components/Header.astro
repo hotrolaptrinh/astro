@@ -87,39 +87,4 @@ const nav = [
     const isDark = document.documentElement.dataset.theme === "dark";
     applyTheme(!isDark);
   });
-</script>  <button id="themeToggle" class="btn btn-ghost btn-circle" aria-label="Đổi giao diện">
-    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="size-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-14a1 1 0 0 0 1-1V2a1 1 0 1 0-2 0v1a1 1 0 0 0 1 1Zm0 16a1 1 0 0 0-1 1v1a1 1 0 1 0 2 0v-1a1 1 0 0 0-1-1ZM4.22 5.64a1 1 0 0 0 1.42-1.42L4.34 2.92a1 1 0 0 0-1.42 1.42l1.3 1.3ZM19.78 18.36a1 1 0 0 0-1.42 1.42l1.3 1.3a1 1 0 1 0 1.42-1.42l-1.3-1.3ZM2 13a1 1 0 1 0 0-2H1a1 1 0 0 0 0 2h1Zm21-2h-1a1 1 0 1 0 0 2h1a1 1 0 1 0 0-2ZM4.22 18.36l-1.3 1.3a1 1 0 1 0 1.42 1.42l1.3-1.3a1 1 0 0 0-1.42-1.42ZM19.78 5.64l1.3-1.3a1 1 0 0 0-1.42-1.42l-1.3 1.3a1 1 0 0 0 1.42 1.42Z"/></svg>
-    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="size-5 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M21.75 15.5a9 9 0 0 1-11.25-11 9 9 0 1 0 11.25 11Z"/></svg>
-  </button>
-  
-        <a href="/login" class="btn btn-primary">Đăng nhập</a>
-    </div>
-  </div>
-
-<script>
-  const toggleBtn = document.getElementById("themeToggle");
-  const sun = document.getElementById("sunIcon");
-  const moon = document.getElementById("moonIcon");
-
-  const applyTheme = (theme) => {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem("theme", theme);
-    sun.classList.toggle("hidden", theme !== "winter");
-    moon.classList.toggle("hidden", theme !== "dracula");
-  };
-
-  // Khởi tạo: lấy từ localStorage hoặc hệ thống
-  (() => {
-    const stored = localStorage.getItem("theme");
-    if (stored) return applyTheme(stored);
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    applyTheme(prefersDark ? "dracula" : "winter");
-  })();
-
-  toggleBtn.addEventListener("click", () => {
-    const current = document.documentElement.dataset.theme;
-    applyTheme(current === "winter" ? "dracula" : "winter");
-  });
 </script>
-
-</header>
