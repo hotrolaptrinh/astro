@@ -1,13 +1,28 @@
 ---
 export interface Props {
-  title: string; price: number; sale?: number;
-  category: string; img: string;
+  title: string;
+  price: number;
+  sale?: number;
+  category: string;
+  thumbnail?: string;
 }
-const { title, price, sale, category, thumbnail } = Astro.props;
+const { title, price, sale, category, thumbnail } = Astro.props as Props;
+const base = Astro.site?.pathname || "/";
+const fallback = `${base}img/no-image.svg`;
+const imgSrc = `${base}${thumbnail ?? "/img/no-image.svg"}`;
 const fmt = (n:number)=> n.toLocaleString("vi-VN");
 ---
 <article class="card bg-base-100 border border-base-300 hover:shadow-lg transition">
-  <figure><img src={Astro.site?.pathname + thumbnail} alt={title} class="aspect-video object-cover" loading="lazy" /></figure>
+  <figure>
+    <img
+      src={imgSrc}
+      alt={title}
+      class="aspect-video"
+      loading="lazy"
+      decoding="async"
+      onerror={`this.onerror=null;this.src='${fallback}'`}
+    />
+  </figure>
   <div class="card-body">
     <div class="flex items-center justify-between">
       <h3 class="card-title text-lg">{title}</h3>

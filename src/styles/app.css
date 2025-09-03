@@ -2,3 +2,28 @@
 @plugin "daisyui" {
   themes: winter --default, dracula --prefersdark;
 }
+
+/* Remove default outlines on form controls */
+input,
+textarea,
+select,
+button,
+[role="button"],
+.input,
+.textarea,
+.select {
+  outline: none;
+}
+
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible,
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

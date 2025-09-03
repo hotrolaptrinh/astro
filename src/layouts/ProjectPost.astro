@@ -12,6 +12,9 @@ const projects = allProjects
   .filter((p) => p.data.published)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 10);
+const base = Astro.site?.pathname || "/";
+const fallback = `${base}img/no-image.svg`;
+const imgSrc = `${base}${frontmatter.thumbnail ?? "/img/no-image.svg"}`;
 ---
 
 <Base title={frontmatter.title} description={content}>
@@ -23,11 +26,14 @@ const projects = allProjects
     <!-- Hình ảnh sản phẩm -->
     <div class="flex items-center justify-center">
       <figure class="rounded-xl shadow-xl bg-base-200 p-4">
-        <img
-          src={Astro.site?.pathname + frontmatter.thumbnail}
-          alt={frontmatter.title}
-          class="rounded-lg aspect-video object-cover"
-        />
+    <img
+      src={imgSrc}
+      alt={frontmatter.title}
+      class="aspect-video"
+      loading="lazy"
+      decoding="async"
+      onerror={`this.onerror=null;this.src='${fallback}'`}
+    />
       </figure>
     </div>
 

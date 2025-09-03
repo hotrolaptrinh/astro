@@ -3,3 +3,5 @@
 
 export const SITE_TITLE = 'Astro Blog';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
+// Number of projects per page on listings
+export const PROJECTS_PER_PAGE = 8;
