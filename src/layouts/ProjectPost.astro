@@ -5,13 +5,14 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BackToTop from "../components/BackToTop.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import CommentForm from "../components/CommentForm.astro";
 const { content, frontmatter } = Astro.props;
 const allProjects = await getCollection("projects");
-// get 10 projects
+// get 4 related projects
 const projects = allProjects
   .filter((p) => p.data.published)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 10);
+  .slice(0, 4);
 const base = Astro.site?.pathname || "/";
 const fallback = `${base}img/no-image.svg`;
 const imgSrc = `${base}${frontmatter.thumbnail ?? "/img/no-image.svg"}`;
@@ -128,6 +129,7 @@ const imgSrc = `${base}${frontmatter.thumbnail ?? "/img/no-image.svg"}`;
     <h2>Mô tả</h2>
     <slot />
   </div>
+  <CommentForm />
   <section id="projects" class="fade-in">
     <h2 class="text-2xl font-bold mb-6">Code liên quan</h2>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
