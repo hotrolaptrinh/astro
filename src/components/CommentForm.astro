@@ -8,22 +8,6 @@ const comments = [
   <div class="container mx-auto px-4 max-w-3xl">
     <h2 class="text-2xl font-bold mb-6">Bình luận</h2>
 
-    <form class="card bg-base-100 border border-base-300 mb-6">
-      <div class="card-body space-y-4">
-        <label class="form-control">
-          <span class="label-text">Tên</span>
-          <input type="text" placeholder="Nguyễn Văn A" class="input input-bordered" />
-        </label>
-        <label class="form-control">
-          <span class="label-text">Nội dung</span>
-          <textarea rows="4" placeholder="Nhập bình luận..." class="textarea textarea-bordered"></textarea>
-        </label>
-        <div class="card-actions justify-end">
-          <button type="submit" class="btn btn-primary">Gửi</button>
-        </div>
-      </div>
-    </form>
-
     <div class="space-y-4">
       {comments.map((c) => (
         <article class="border border-base-300 rounded-lg p-4" >

@@ -16,133 +16,145 @@ const projects = allProjects
 const base = Astro.site?.pathname || "/";
 const fallback = `${base}img/no-image.svg`;
 const imgSrc = `${base}${frontmatter.thumbnail ?? "/img/no-image.svg"}`;
+const dateText = frontmatter?.date
+  ? (frontmatter.date instanceof Date
+      ? frontmatter.date.toLocaleDateString("vi-VN")
+      : new Date(frontmatter.date as any).toLocaleDateString("vi-VN"))
+  : "";
 ---
 
 <Base title={frontmatter.title} description={content}>
   <Fragment slot="header"><Header /></Fragment>
 
-  <section
-    class="container mx-auto px-4 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8"
-  >
-    <!-- Hình ảnh sản phẩm -->
-    <div class="flex items-center justify-center">
-      <figure class="rounded-xl shadow-xl bg-base-200 p-4">
-    <img
-      src={imgSrc}
-      alt={frontmatter.title}
-      class="aspect-video"
-      loading="lazy"
-      decoding="async"
-      onerror={`this.onerror=null;this.src='${fallback}'`}
-    />
-      </figure>
-    </div>
-
-    <!-- Thông tin sản phẩm -->
-    <div class="space-y-6">
-      <h1 class="text-2xl font-bold">{frontmatter.title}</h1>
-
-      <!-- Rating -->
-      <div class="flex items-center gap-2">
-        <span class="text-sm">10 </span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-4"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-          ></path>
-        </svg>
-        <div class="rating rating-sm">
-          <input
-            type="radio"
-            name="rating-1"
-            class="mask mask-star-2 bg-orange-400"
-            checked
-          />
-          <input
-            type="radio"
-            name="rating-1"
-            class="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            name="rating-1"
-            class="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            name="rating-1"
-            class="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            name="rating-1"
-            class="mask mask-star-2 bg-orange-400"
-          />
+  <div class="flex pt-3">
+    <div class="flex-9">
+          <h1 class="text-2xl font-bold">{frontmatter.title}</h1>
+      <section
+        class="container mx-auto px-4 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8"
+      >
+        <!-- Hình ảnh sản phẩm -->
+        <div class="flex items-center justify-center">
+          <figure class="rounded-xl shadow-xl p-4">
+            <img
+              src={imgSrc}
+              alt={frontmatter.title}
+              class="aspect-video"
+              loading="lazy"
+              decoding="async"
+              onerror={`this.onerror=null;this.src='${fallback}'`}
+            />
+          </figure>
         </div>
-        <span class="text-sm opacity-70">(0 reviews)</span>
-      </div>
-      <!-- Giá -->
-      <h3 class="text-xl font-semibold">
-        Giá: <span class="text-primary"
-          >{frontmatter.sale.toLocaleString("vi-VN")}₫ <span
-            class="line-through ml-2 opacity-60"
-            >{frontmatter.price?.toLocaleString("vi-VN")}₫</span
-          ></span
-        >
-      </h3>
 
-      <!-- Ưu đãi -->
-      <ul class="list-disc list-inside text-sm space-y-1">
-        <li>Ngày đăng:</li>
-        <li>Thể loại:</li>
-      </ul>
+        <!-- Thông tin sản phẩm -->
+        <div class="space-y-6">
+          <!-- Giá -->
+          <h3 class="text-xl font-semibold">
+            Giá: <span class="text-primary"
+              >{frontmatter.sale.toLocaleString("vi-VN")}₫ <span
+                class="line-through ml-2 opacity-60"
+                >{frontmatter.price?.toLocaleString("vi-VN")}₫</span
+              ></span
+            >
+          </h3>
 
-      <!-- Chọn màu -->
-      <div>
-        <h4 class="font-medium mb-2">Giao diện:</h4>
-        <div class="flex gap-2">
-          <button
-            class="w-6 h-6 rounded-full bg-sky-400 border-2 border-primary"
-          ></button>
-          <button class="w-6 h-6 rounded-full bg-gray-400 border"></button>
+          <!-- Rating -->
+          <div class="flex items-center gap-2">
+            <span class="text-sm">10 </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+              ></path>
+            </svg>
+            <div class="rating rating-sm">
+              <input
+                type="radio"
+                name="rating-1"
+                class="mask mask-star-2 bg-orange-400"
+                checked
+              />
+              <input
+                type="radio"
+                name="rating-1"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-1"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-1"
+                class="mask mask-star-2 bg-orange-400"
+              />
+              <input
+                type="radio"
+                name="rating-1"
+                class="mask mask-star-2 bg-orange-400"
+              />
+            </div>
+            <span class="text-sm opacity-70">(0 reviews)</span>
+          </div>
+          <!-- Ưu đãi -->
+            <div>
+              Ngày đăng:
+              <span class="font-medium ml-1">{dateText}</span>
+            </div>
+            <div>
+              Thể loại:
+              {frontmatter.category && (
+                <span class="badge badge-neutral ml-1">{frontmatter.category}</span>
+              )}
+            </div>
+            {frontmatter.tags?.length > 0 && (
+              <div class="flex items-center gap-2 flex-wrap">
+                <span>Tag:</span>
+                {frontmatter.tags.map((t: string) => (
+                  <span class="badge badge-outline">{t}</span>
+                ))}
+              </div>
+            )}
+
+          <!-- Số lượng + nút -->
+          <div class="flex flex-wrap gap-3 items-center">
+            <button class="btn btn-primary">Tải về</button>
+            <button class="btn btn-neutral"> Xem demo</button>
+            <button class="btn btn-outline btn-circle"> ❤️ </button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Số lượng + nút -->
-      <div class="flex flex-wrap gap-3 items-center">
-        <button class="btn btn-primary">Tải về</button>
-        <button class="btn btn-neutral"> Xem demo</button>
-        <button class="btn btn-outline btn-circle"> ❤️ </button>
+      <div class="prose lg:prose-lg mx-auto py-12">
+        <h2>Mô tả</h2>
+        <slot />
       </div>
+      <CommentForm />
     </div>
-  </section>
-
-  <div class="prose lg:prose-lg mx-auto py-12">
-    <h2>Mô tả</h2>
-    <slot />
+    <div class="flex-3">
+      <section id="projects" class="fade-in">
+        <h2 class="text-2xl font-bold mb-6">Code liên quan</h2>
+        <div class="grid gap-3 grid-cols-1">
+          {
+            projects.map((p) => (
+              <a href={`${Astro.site?.pathname}projects/${p.slug}`}>
+                <ProjectCard {...p.data} />
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </div>
   </div>
-  <CommentForm />
-  <section id="projects" class="fade-in">
-    <h2 class="text-2xl font-bold mb-6">Code liên quan</h2>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        projects.map((p) => (
-          <a href={`${Astro.site?.pathname}projects/${p.slug}`}>
-            <ProjectCard {...p.data} />
-          </a>
-        ))
-      }
-    </div>
-  </section>
-
   <!-- <article class="prose lg:prose-lg mx-auto py-12">
     <h1>{frontmatter.title}</h1>
     {frontmatter.thumbnail && <img src={Astro.site?.pathname + frontmatter.thumbnail} alt={frontmatter.title} class="rounded-lg shadow my-6" />}

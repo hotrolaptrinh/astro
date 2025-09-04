@@ -96,7 +96,7 @@ const extraQuery = extraParams.toString() ? `&${extraParams.toString()}` : "";
     </div>
 
     <!-- Grid -->
-    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-6">
+    <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-6">
       {pageItems.map((p) => (
         <a href={`${Astro.site?.pathname || '/'}projects/${p.slug}`}><ProjectCard {...p.data} /></a>
       ))}
