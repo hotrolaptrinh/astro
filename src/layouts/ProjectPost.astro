@@ -5,8 +5,8 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BackToTop from "../components/BackToTop.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import CommentForm from "../components/CommentForm.astro";
-const { content, frontmatter } = Astro.props;
+import DisqusComments from "../components/DisqusComments.astro";
+const { content, frontmatter, slug } = Astro.props;
 const allProjects = await getCollection("projects");
 // get 4 related projects
 const projects = allProjects
@@ -26,8 +26,8 @@ const dateText = frontmatter?.date
 <Base title={frontmatter.title} description={content}>
   <Fragment slot="header"><Header /></Fragment>
 
-  <div class="flex pt-3">
-    <div class="flex-9">
+  <div class="flex flex-col lg:flex-row pt-3">
+    <div class="w-full lg:w-3/4">
           <h1 class="text-2xl font-bold">{frontmatter.title}</h1>
       <section
         class="container mx-auto px-4 max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8"
@@ -138,9 +138,9 @@ const dateText = frontmatter?.date
         <h2>Mô tả</h2>
         <slot />
       </div>
-      <CommentForm />
+      <DisqusComments identifier={slug} />
     </div>
-    <div class="flex-3">
+    <div class="w-full lg:w-1/4 mt-8 lg:mt-0">
       <section id="projects" class="fade-in">
         <h2 class="text-2xl font-bold mb-6">Code liên quan</h2>
         <div class="grid gap-3 grid-cols-1">
