@@ -5,8 +5,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BackToTop from "../components/BackToTop.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import DisqusComments from "../components/DisqusComments.astro";
-const { content, frontmatter, slug } = Astro.props;
+import GiscusComments from "../components/GiscusComments.astro";
+const { content, frontmatter } = Astro.props;
+
 const allProjects = await getCollection("projects");
 // get 4 related projects
 const projects = allProjects
@@ -138,6 +139,7 @@ const dateText = frontmatter?.date
         <h2>Mô tả</h2>
         <slot />
       </div>
+      <GiscusComments />
       <DisqusComments identifier={slug} />
     </div>
     <div class="w-full lg:w-1/4 mt-8 lg:mt-0">
